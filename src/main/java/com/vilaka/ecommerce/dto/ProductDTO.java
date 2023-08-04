@@ -24,6 +24,7 @@ public class ProductDTO {
         this.imgUrl = imgUrl;
     }
 
+    //ModelMapper (lib que copia entidades para objetos
     public ProductDTO(Product entity) {
         id = entity.getId();
         name = entity.getName();
