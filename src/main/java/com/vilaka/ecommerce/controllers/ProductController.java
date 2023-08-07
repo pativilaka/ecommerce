@@ -1,7 +1,9 @@
 package com.vilaka.ecommerce.controllers;
 
+import com.vilaka.ecommerce.dto.CustomError;
 import com.vilaka.ecommerce.dto.ProductDTO;
 import com.vilaka.ecommerce.services.ProductServices;
+import com.vilaka.ecommerce.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
+import java.time.Instant;
 
 @RestController
 @RequestMapping(value = "/products")

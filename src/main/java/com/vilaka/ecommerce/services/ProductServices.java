@@ -3,13 +3,13 @@ package com.vilaka.ecommerce.services;
 import com.vilaka.ecommerce.dto.ProductDTO;
 import com.vilaka.ecommerce.entities.Product;
 import com.vilaka.ecommerce.repositories.ProductRepository;
+import com.vilaka.ecommerce.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,16 +19,18 @@ public class ProductServices {
 
     @Transactional(readOnly = true)
     public ProductDTO findById(Long id){
-        Optional<Product> result = repository.findById(id);
-        Product product = result.get();
-        ProductDTO dto = new ProductDTO(product);
-        return dto;
+        Product product = repository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Recurso não encontrado!"));
+        return new ProductDTO(product);
+
     }
 
     /* Forma reduzida!
     public ProductDTO findById(Long id){
-        Product product = repository.findById(id).get();
-        return new ProductDTO(product);
+        Optional<Product> result = repository.findById(id);
+        Product product = result.get();
+        ProductDTO dto = new ProductDTO(product);
+        return dto;
     }
      */
 
@@ -40,7 +42,6 @@ public class ProductServices {
 
     @Transactional
     public ProductDTO insert(ProductDTO dto){
-
         Product entity = new Product();
         copyDtoToEntity(dto, entity);
         entity = repository.save(entity);
