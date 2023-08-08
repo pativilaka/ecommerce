@@ -1,15 +1,23 @@
 package com.vilaka.ecommerce.dto;
 
 import com.vilaka.ecommerce.entities.Product;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 
 public class ProductDTO {
 
     private Long id;
 
+    @Size(min = 3, max = 80, message = "Nome precisa ter entre 3 e 80 caracteres")
+    @NotBlank(message = "Campo requerido")
     private String name;
 
+    @Size(min = 10, message = "Descrição precisa ter mais de 10 caracteres")
+    @NotBlank(message = "Campo requerido")
     private String description;
 
+    @Positive(message = "Valor precisa ser positivo")
     private Double price;
 
     private String imgUrl;
